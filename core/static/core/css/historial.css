@@ -1,0 +1,22 @@
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #cd9cf2;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to top left, rgb(144, 0, 255), rgb(64, 0, 255));
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to top left, rgb(255, 255, 255), rgb(255, 255, 255))
+}
+
+
+.btn-custom {
+    background-color: #7fad39;
+    color: white;
+}
+
+.btn-custom:hover,
+.btn-custom:focus {
+    background-color: #7fad39;
+    color: white;
+}

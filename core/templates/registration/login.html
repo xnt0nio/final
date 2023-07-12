@@ -1,0 +1,76 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block css %}
+
+{% endblock %}
+{% block contenido %}
+<section class="vh-100" style="background-color: #ffffff;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5"> 
+        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+
+            <h3 class="mb-5">Iniciar sesión</h3>
+            <form id="comentarForm" method="POST">
+            {% csrf_token %}    
+            {{ form | crispy }}
+            
+            <!-- Checkbox -->
+            <div class="form-check d-flex justify-content-start mb-4">
+              <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
+              <label class="form-check-label" for="form1Example3"> Recordar contraseña</label>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div class="g-recaptcha" data-sitekey="6LcJwMUmAAAAANqZ8Qt8FPG71fsV432XnLF5bwh9"></div>
+              <div id="captchaValidacion" style="display: none;">Por favor, completa el captcha.</div>
+            </div>
+            <h6>ㅤ</h6>
+
+            <input type="submit" class="btn btn-success btn-lg btn-block" value="Ingresar">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+  $(document).ready(function() {
+    $('#comentarForm').submit(function(event) {
+      if (!grecaptcha.getResponse()) {
+        $("#captchaValidacion").show();
+        event.preventDefault();
+      } else {
+        $("#captchaValidacion").hide();
+      }
+    });
+
+    $('#tipoTrabajador').change(function() {
+      if ($('#tipoTrabajador').val() == '4') {
+        document.getElementById('nombreotro').disabled = false;
+        document.getElementById('nombreotro').focus();
+      } else {
+        document.getElementById('nombreotro').disabled = true;
+      }
+    });
+
+    $('#anonimo').change(function() {
+      if ($('#anonimo').val() == '1') {
+        ocultarDiv();
+      } else {
+        mostrarDiv();
+      }
+    });
+
+    onComplete = function() {
+      $("#captchaValidacion").hide();
+    }
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'core/css/historial.css' %}" type="text/css">
+<style>
+    .btn-custom {
+        background-color: #7fad39;
+        color: white;
+        border-color: #7fad39;
+    }
+
+    .btn-custom:hover,
+    .btn-custom:focus {
+        background-color: #5d8f2e;
+        border-color: #5d8f2e;
+    }
+</style>
+{% endblock %}
+{% block contenido %}
+
+<section class="h-135 gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-10 col-xl-8">
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-header px-4 py-5" style="background-color: rgb(127, 173, 57);">
+                        <h2 class="text-center" style="color: white;">Historial de tus Compras</h2>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <p class="lead fw-normal mb-0" style="color: #7fad39;">Receipt</p>
+                            <p class="small text-muted mb-0">Receipt Voucher : 1KAU9-84UIL</p>
+                        </div>
+                        <div class="card shadow-0 border mb-4">
+
+                            {% if historial_compras %}
+
+                            {% for compra in historial_compras %}
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="{{ compra.producto.imagen.url }}" class="img-fluid">
+                                    </div>
+                                    <div
+                                        class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <p class="text-muted mb-0">{{ compra.producto.nombre }}</p>
+                                    </div>
+                                    <div
+                                        class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <p class="text-muted mb-0 small">cantidad: {{ compra.cantidad }}</p>
+                                    </div>
+                                    <div
+                                        class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <p class="text-muted mb-0 small">${{ compra.total_productos }}</p>
+                                    </div>
+                                    <div
+                                        class="col-md-2 text-center d-flex justify-content-center align-items-center">
+
+                                        <p class="text-muted mb-0 small">fecha: {{ compra.fecha_compra }}</p>
+                                    </div>
+                                </div>
+                                <hr class="mb-4"
+                                    style="background-color: #7fad39; opacity: 1;">
+                            </div>
+
+
+                            {% endfor %}
+                            {% else %}
+                            <div class="alert alert-danger text-center">
+                                No tienes compras realizadas.
+                            </div>
+                            {% endif %}
+
+                            {% if historial_compras.has_other_pages %}
+                            <div class="pagination justify-content-center mt-4">
+                                {% if historial_compras.has_previous %}
+                                <a class="btn btn-outline-primary btn-custom"
+                                    href="?page={{ historial_compras.previous_page_number }}">Anterior</a>
+                                {% endif %}
+                                <span class="current-page btn btn-primary btn-custom disabled">
+                                    {{ historial_compras.number }}
+                                </span>
+                                {% if historial_compras.has_next %}
+                                <a class="btn btn-outline-primary btn-custom"
+                                    href="?page={{ historial_compras.next_page_number }}">Siguiente</a>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+
+
+                        </div>
+                        <div class="card-footer border-0 px-4 py-5"
+                            style="background-color: rgb(127, 173, 57); border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+{% endblock %}
+
+{% block js %}
+{% endblock %}

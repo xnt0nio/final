@@ -1,0 +1,91 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block css %}
+
+  <!-- Estilos personalizados -->
+{% endblock %}
+{% block contenido %}
+  {% if boletas %}
+    <div class="card">
+      <div class="card-body">
+        <!-- Contenido del voucher -->
+        <div class="container mb-5 mt-3">
+          <!-- Resto del código HTML -->
+
+          <div class="row my-2 mx-1 justify-content-center">
+            <table class="table table-striped table-borderless">
+              <thead style="background-color:#7fad39 ;" class="text-white">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Fecha compra</th>
+                  <th scope="col">cantidad</th>
+                  <th scope="col">Precio unitario</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Iterar sobre los productos en el contexto -->
+                {% for boleta in boletas %}
+                <tr>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td>{{ boleta.producto.nombre }}</td>
+                  <td>{{ boleta.fecha_compra }}</td>
+                  <td>{{ boleta.cantidad }}</td>
+                  <td>{{ boleta.precio_unitario }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="row">
+            <div class="col-xl-8">
+              <p class="ms-3">Rut de la empresa: 12.345.678-9</p>
+            </div>
+            <div class="col-xl-3">
+              <ul class="list-unstyled">
+                <li class="text-muted ms-3"><span class="text-black me-4">SubTotal</span>{{ boletas.0.precio_total }}</li>
+                <li class="text-muted ms-3 mt-2"><span class="text-black me-4">IVA(19%):</span>{{ boletas.0.iva }}</li>
+                {% if suscripcion %}
+                <li class="text-muted ms-3 mt-2"><span class="text-black me-4">descuento:</span>{{ boletas.0.descuento }}</li>
+                {% endif %}
+              </ul>
+              <p class="text-black float-start">
+                <span style="font-size: 25px;">total: ${{ boletas.0.monto_neto }}</span>
+              </p>
+     
+            </div>
+
+            <div class="mr-2">
+              <a href="{% url 'borrar_datos' %}" class="btn btn-success" style="background-color: green;">Seguimiento</a>
+            </div>
+
+
+
+            <div class="mr-2">
+              <a href="{% url 'borrar_datos2' %}" class="btn btn-success" style="background-color: green;">Historial</a>
+            </div>
+
+            <div>
+              <a href="{% url 'borrar_datos3' %}" class="btn btn-success" style="background-color: green;">Inicio</a>
+            </div>
+
+            
+            <div class="d-flex justify-content-end">
+              <div class="col-xl-1">
+                <!-- Botón de descarga -->
+                <a href="{% url 'descargar_pdf' %}" class="btn btn-success" style="background-color: green;">Descargar PDF</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resto del código HTML -->
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+{% block js %}
+  <!-- Scripts personalizados -->
+{% endblock %}
